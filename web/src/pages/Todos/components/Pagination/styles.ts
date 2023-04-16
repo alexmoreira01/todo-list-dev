@@ -14,12 +14,12 @@ export const PaginationContainer = styled.div`
 
 export const ButtonPagination = styled.button`
   display: inline-flex;
-  height: 32px;
-  min-width: 32px;
+  width: 40px;
+  height: 40px;
   
   margin: 0px 5px;
   padding: 0px 6px;
-  border-radius: 16px;
+  border-radius: 6px;
   box-sizing: border-box;
 
   align-items: center;

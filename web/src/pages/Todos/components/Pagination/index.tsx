@@ -6,7 +6,11 @@ interface PaginationProps {
   onSetCurrentPage: (index: number) => void
 }
 
-export function Pagination({pages, currentPage, onSetCurrentPage }:PaginationProps) {
+export function Pagination({
+  pages, 
+  currentPage, 
+  onSetCurrentPage 
+}:PaginationProps) {
   return (
     <PaginationContainer>
       {Array.from(Array(pages), (item, index) => {
@@ -15,7 +19,11 @@ export function Pagination({pages, currentPage, onSetCurrentPage }:PaginationPro
             key={index}
             className={`${index === currentPage ? "buttonActive" : ""}`}
             value={index}
-            onClick={() => { onSetCurrentPage(index) }} >{index + 1}
+            onClick={() => { 
+              onSetCurrentPage(index); 
+            }} 
+          >
+            {index + 1}
           </ButtonPagination>
         )
       })}

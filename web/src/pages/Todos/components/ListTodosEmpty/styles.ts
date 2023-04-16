@@ -43,4 +43,6 @@ export const TodosListEmptyContainer = styled.div`
   justify-content: center;
 
   margin-bottom: 16px;
+
+  color: ${(props) => props.theme["blue-300"]};
 `;

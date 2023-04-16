@@ -8,8 +8,8 @@ export function ListTodosEmpty() {
             <table >
                 <thead >
                     <tr>
-                        <th>Título</th>
-                        <th>Url</th>
+                        <th>Tarefa</th>
+                        <th>Status</th>
                         <th>Data</th>
                         <th> </th>
                     </tr>
@@ -23,8 +23,8 @@ export function ListTodosEmpty() {
                         <Clipboard size={60} />
                     </TodosListEmptySvg>
                     <p>
-                        Não existem todos salvos
-                        <span>Salve suas todos aqui</span>
+                        Não existem tarefas salvas
+                        <span>Salve suas tarefas aqui</span>
                     </p>
                 </div>
 
