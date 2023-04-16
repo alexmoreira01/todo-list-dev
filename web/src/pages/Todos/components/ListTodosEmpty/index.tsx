@@ -3,33 +3,37 @@ import { TodosListEmptyContainer, TodosListEmptySvg } from "./styles";
 import { Clipboard } from "phosphor-react";
 
 export function ListTodosEmpty() {
-    return (
-        <TodoList>
-            <table >
-                <thead >
-                    <tr>
-                        <th>Tarefa</th>
-                        <th>Status</th>
-                        <th>Data</th>
-                        <th> </th>
-                    </tr>
-                </thead>
-            </table>
+  const isMobile = window.innerWidth <= 768;
 
-            <TodosListEmptyContainer >
-                <div>
+  return (
+    <TodoList>
+      {isMobile ? "" :
+        <table >
+          <thead >
+            <tr>
+              <th>Tarefa</th>
+              <th>Status</th>
+              <th>Data</th>
+              <th> </th>
+            </tr>
+          </thead>
+        </table>
+      }
 
-                    <TodosListEmptySvg>
-                        <Clipboard size={60} />
-                    </TodosListEmptySvg>
-                    <p>
-                        Não existem tarefas salvas
-                        <span>Salve suas tarefas aqui</span>
-                    </p>
-                </div>
+      <TodosListEmptyContainer >
+        <div>
 
-            </TodosListEmptyContainer>
+          <TodosListEmptySvg>
+            <Clipboard size={60} />
+          </TodosListEmptySvg>
+          <p>
+            Não existem tarefas salvas
+            <span>Salve suas tarefas aqui</span>
+          </p>
+        </div>
 
-        </TodoList>
-    )
+      </TodosListEmptyContainer>
+
+    </TodoList>
+  )
 }

@@ -87,6 +87,7 @@ export function Todo() {
       </TodoDescription>
 
       {isMobile ? (
+        todos.length != 0 ?
         <TodoListMobile>
           {currentTodos.map(todo => (
             <ul key={todo.id}>
@@ -138,6 +139,8 @@ export function Todo() {
             onSetCurrentPage={handleSetCurrentPage}
           />
         </TodoListMobile>
+        :
+        <ListTodosEmpty />
       ) : (
         <TodoList >
           {
