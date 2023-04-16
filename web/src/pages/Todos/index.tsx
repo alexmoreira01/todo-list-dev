@@ -1,24 +1,27 @@
-import * as Dialog from '@radix-ui/react-dialog';
 import { useContext, useState } from 'react';
 import { TodoContext } from '../../context/TodosContext';
+import * as Dialog from '@radix-ui/react-dialog';
+import * as Select from '@radix-ui/react-select';
 
-import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
 import ptBR from "date-fns/esm/locale/pt-BR";
 
-import { NotePencil, Trash } from "phosphor-react";
+import { CaretDown, NotePencil, Trash } from "phosphor-react";
 
-import { UpdateTodoModal } from './components/ModalDialog/UpdateTodoModal';
+import { CreateForm } from './components/CreateForm';
+import { UpdateTodoModal } from './components/UpdateModalDialog/UpdateTodoModal';
 import { ListTodosEmpty } from './components/ListTodosEmpty';
 import { Pagination } from './components/Pagination';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ButtonsActions, ButtonTrashIcon, StatusTodo, TodoContainer, TodoHeading, TodoList } from './styles';
-import { CreateForm } from './components/CreateForm';
+import { ButtonsActions, ButtonTrashIcon, StatusTodo, TodoContainer, TodoDescription, TodoHeading, TodoList } from './styles';
+import { SelectStatus } from './components/SelectStatus';
+import { SelectIcon, SelectTrigger } from './components/SelectStatus/styles';
 
 export function Todo() {
-  const { todos, deleteTodo, notifyWarning } = useContext(TodoContext)
+  const { todos, deleteTodo, notifyWarning, fetchTransactionsStatus } = useContext(TodoContext)
 
   const [todosPerPage, setTodosPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0)
@@ -52,16 +55,43 @@ export function Todo() {
     setCurrentPage(index)
   }
 
+  
+  function aa(event:any){
+    fetchTransactionsStatus(event)
+  }
+
+  const [selectedValue, setSelectedValue] = useState('');
+
+  // const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSelectedValue(event.target.value);
+
+  //   console.log(selectedValue)
+  // };
+
   return (
     <TodoContainer>
 
       <ToastContainer />
 
       <TodoHeading>
-        <CreateForm/>
-
-        {/* <h1>Total de todos: {todos.length}</h1> */}
+        <CreateForm />
       </TodoHeading>
+
+      <TodoDescription>
+        <p>Tarefas: <span> {todos.length} </span></p>
+
+        <Select.Root onValueChange={aa}>
+          <SelectTrigger aria-label="Todo">
+            <Select.Value placeholder="Seleciona o status"   />
+            <SelectIcon>
+              <CaretDown />
+            </SelectIcon>
+          </SelectTrigger>
+
+          <SelectStatus/>
+        </Select.Root>
+
+      </TodoDescription>
 
       <TodoList >
         {
@@ -102,18 +132,18 @@ export function Todo() {
                               onClick={() => { setTodoSelected(todo) }}
                             >
                               <NotePencil size={29} weight="fill" alt="Editar todo" />
-
                             </Dialog.Trigger>
-
-                            <ButtonTrashIcon onClick={() => { handleDeleteTodo(todo.id) }}>
-                              <Trash size={29} weight="fill" alt="Excluir todo" />
-                            </ButtonTrashIcon>
 
                             <UpdateTodoModal
                               todoSelected={todoSelected}
-                              // onCloseModal={handleCloseUpdateTodoModal}
+                              onClose={handleCloseUpdateTodoModal}
                             />
+
                           </Dialog.Root>
+
+                          <ButtonTrashIcon onClick={() => { handleDeleteTodo(todo.id) }}>
+                              <Trash size={29} weight="fill" alt="Excluir todo" />
+                            </ButtonTrashIcon>
                         </ButtonsActions>
                       </td>
 

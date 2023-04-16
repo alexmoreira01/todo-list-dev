@@ -20,6 +20,30 @@ export const TodoHeading = styled.div`
   align-items: center;
 `;
 
+export const TodoDescription = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 1rem;
+
+  p {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  p span {
+    font-weight: bold;
+    font-size: 1rem;
+
+    color: ${(props) => props.theme["blue-300"]};
+  }
+
+  button {
+    
+  }
+`;
+
 export const TodoList = styled.div`
   flex: 1;
   overflow: auto;

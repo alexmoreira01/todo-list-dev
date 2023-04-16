@@ -23,6 +23,7 @@ export interface Todo {
 
 interface TodoContextData {
   todos: Todo[];
+  fetchTransactionsStatus: (status: string) => void;
   createNewTodo: (data: TodoData) => void;
   updateTodo: (data: TodoDataUpdate) => void;
   deleteTodo: (id: string) => void;
@@ -75,19 +76,37 @@ export function TodoContextProvider({ children }: TodoContextProviderProps) {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
-    fetchTransactions();
+    fetchTodos();
   }, []);
 
-  async function fetchTransactions() {
+  async function fetchTodos() {
     api.get('/').then(
       response => {
-        console.log(response.data)
         setTodos(response.data)
       }
     )
       .catch((error) => {
         notifyError("Não foi possível listar as tarefas, serviço indisponível!")
       })
+  }
+
+  async function fetchTransactionsStatus(status: string) {
+
+    if (status === 'all') {
+      fetchTodos();
+    } else {
+      api.get(`/${status}`).then(
+        response => {
+          setTodos(response.data)
+        }
+      )
+        .catch((error) => {
+          if (error.response.status === 400) {
+            return notifyWarning("O status é invalido!");
+          }
+          notifyError("Não foi possível listar as tarefas, serviço indisponível!")
+        })
+    }
   }
 
   async function createNewTodo(data: TodoData) {
@@ -117,21 +136,19 @@ export function TodoContextProvider({ children }: TodoContextProviderProps) {
       status: data.status,
     }).then(
       response => {
-        notifySuccess("Todo editado com sucesso!")
+        notifySuccess("Tarefa editada com sucesso!")
 
-        fetchTransactions();
-
-        // setTodos((state) => [response.data, ...state]);
+        fetchTodos();
       }
     )
       .catch((error) => {
         if (error.response.status === 400) {
-          return notifyWarning("Todo  inexistente, altere o id!");
+          return notifyWarning("Tarefa inexistente, altere o id!");
         } else if (error.response.status === 500) {
-          return notifyWarning("Todo já existente, altere o título!");
+          return notifyWarning("Tarefa já existente, altere o título!");
         }
 
-        notifyError("Não foi possível editar o todo, serviço indisponível!");
+        notifyError("Não foi possível editar a tarefa, serviço indisponível!");
       })
   }
 
@@ -139,20 +156,17 @@ export function TodoContextProvider({ children }: TodoContextProviderProps) {
     await api.delete(`/${id}`)
       .then(
         response => {
-          notifySuccess("Todo excluido com sucesso!");
+          notifySuccess("Tarefa excluido com sucesso!");
 
-          fetchTransactions();
-
-          // const todosState = todos.filter((state) => state.id != id);
-          // setTodos((state) => [todosState[0], ...state]);
+          fetchTodos();
         }
       )
       .catch((error) => {
         if (error.response.status === 400) {
-          return notifyWarning("Todo  inexistente, altere o id!");
+          return notifyWarning("Tarefa  inexistente, altere o id!");
         }
 
-        notifyError("Não foi possível excluir o todo, serviço indisponível!");
+        notifyError("Não foi possível excluir a tarefa, serviço indisponível!");
       })
   }
 
@@ -160,6 +174,7 @@ export function TodoContextProvider({ children }: TodoContextProviderProps) {
     <TodoContext.Provider
       value={{
         todos,
+        fetchTransactionsStatus,
         createNewTodo,
         updateTodo,
         deleteTodo,
