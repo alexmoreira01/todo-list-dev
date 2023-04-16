@@ -29,6 +29,7 @@ class CreateTodo {
 
     const todo = new Todo({
       label: label,
+      status: 'pending',
       updated_at: null
     });
 
