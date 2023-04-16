@@ -55,19 +55,10 @@ export function Todo() {
     setCurrentPage(index)
   }
 
-  
-  function aa(event:any){
+  function listTodosByStatus(event:any){
     fetchTransactionsStatus(event)
   }
-
-  const [selectedValue, setSelectedValue] = useState('');
-
-  // const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSelectedValue(event.target.value);
-
-  //   console.log(selectedValue)
-  // };
-
+  
   return (
     <TodoContainer>
 
@@ -80,7 +71,7 @@ export function Todo() {
       <TodoDescription>
         <p>Tarefas: <span> {todos.length} </span></p>
 
-        <Select.Root onValueChange={aa}>
+        <Select.Root onValueChange={listTodosByStatus}>
           <SelectTrigger aria-label="Todo">
             <Select.Value placeholder="Seleciona o status"   />
             <SelectIcon>
