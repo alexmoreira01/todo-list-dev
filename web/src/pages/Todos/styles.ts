@@ -125,6 +125,34 @@ export const TodoList = styled.div`
   }
 `;
 
+export const TodoListMobile = styled.div`
+  margin-top: 12px;
+  word-wrap: break-word;
+
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 25.6px;
+
+    color: ${(props) => props.theme["gray-300"]};
+  }
+
+  li {
+    height: auto !important;
+    overflow: auto !important;
+
+    list-style: none;
+
+    width: 100%;
+    height: 140px;
+    margin-top: 10px;
+    border-radius: 6px;
+    padding: 20px;
+
+    background-color: ${(props) => props.theme["gray-700"]};
+  }
+`;
+
 export const ButtonsActions = styled.div`
   display: flex;
   gap: 1rem;
@@ -144,7 +172,7 @@ export const StatusTodo = styled.span<StatusTodoProps>`
   @media screen and (max-width: 768px) {
     margin-top: 4px;
 
-    font-size: 20px;
+    font-size: 1.2rem;
     font-family: 700;
     line-height: 32px;
   }
@@ -156,6 +184,37 @@ export const StatusTodo = styled.span<StatusTodoProps>`
       : props.theme["red-500"]};
 `;
 
+export const DivFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 12px;
+
+  span {
+    color: ${(props) => props.theme["gray-500"]};
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 4px;
+  }
+
+  button {
+    color: ${(props) => props.theme["gray-100"]};
+    background-color: transparent;
+
+    cursor: pointer;
+    border: none;
+
+    &:hover {
+      color: ${(props) => props.theme["blue-300"]};;
+    }
+
+    box-shadow: 0 0 0 0;
+  }
+`;
 
 
 

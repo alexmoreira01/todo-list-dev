@@ -50,7 +50,7 @@ export function CreateForm() {
       />
 
       <button type='submit' title='Criar'>
-        Criar
+        {isMobile ? "" : "Criar"}
         <PlusCircle size={20} />
       </button>
     </CreateFormContainer>

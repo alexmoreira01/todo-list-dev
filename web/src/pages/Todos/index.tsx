@@ -16,14 +16,16 @@ import { Pagination } from './components/Pagination';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ButtonsActions, ButtonTrashIcon, StatusTodo, TodoContainer, TodoDescription, TodoHeading, TodoList } from './styles';
+import { ButtonsActions, ButtonTrashIcon, DivFooter, StatusTodo, TodoContainer, TodoDescription, TodoHeading, TodoList, TodoListMobile } from './styles';
 import { SelectStatus } from './components/SelectStatus';
 import { SelectIcon, SelectTrigger } from './components/SelectStatus/styles';
 
 export function Todo() {
+  const isMobile = window.innerWidth <= 768;
+
   const { todos, deleteTodo, notifyWarning, fetchTransactionsStatus } = useContext(TodoContext)
 
-  const [todosPerPage, setTodosPerPage] = useState(5);
+  const [todosPerPage, setTodosPerPage] =useState(isMobile ? 15 : 5);
   const [currentPage, setCurrentPage] = useState(0)
 
   const [todoSelected, setTodoSelected] = useState(Object);
@@ -55,10 +57,10 @@ export function Todo() {
     setCurrentPage(index)
   }
 
-  function listTodosByStatus(event:any){
+  function listTodosByStatus(event: any) {
     fetchTransactionsStatus(event)
   }
-  
+
   return (
     <TodoContainer>
 
@@ -73,89 +75,143 @@ export function Todo() {
 
         <Select.Root onValueChange={listTodosByStatus}>
           <SelectTrigger aria-label="Todo">
-            <Select.Value placeholder="Seleciona o status"   />
+            <Select.Value placeholder="Seleciona o status" />
             <SelectIcon>
               <CaretDown />
             </SelectIcon>
           </SelectTrigger>
 
-          <SelectStatus/>
+          <SelectStatus />
         </Select.Root>
 
       </TodoDescription>
 
-      <TodoList >
-        {
-          todos.length != 0 ?
-            <div>
-              <table >
-                <thead >
-                  <tr>
-                    <th>Tarefa</th>
-                    <th>Status</th>
-                    <th>Data</th>
-                    <th></th>
-                  </tr>
-                </thead>
+      {isMobile ? (
+        <TodoListMobile>
+          {currentTodos.map(todo => (
+            <ul key={todo.id}>
+              <li>
+                <p>{todo.label}</p>
 
-                <tbody >
-                  {currentTodos.map(todo => (
-                    <tr key={todo.id}>
-                      <td width="50%">{todo.label}</td>
+                <StatusTodo variant={todo.status}>
+                  {todo.status === "completed" ? "Concluída" : "Pendente"}
+                </StatusTodo>
 
-                      <td>
-                        <StatusTodo variant={todo.status}>
-                          {todo.status === "completed" ? "Concluída" : "Pendente"}
-                        </StatusTodo>
-                      </td>
+                <br />
 
-                      <td>
-                        {formatDistanceToNowStrict(new Date(todo.created_at), {
-                          addSuffix: true,
-                          locale: ptBR
-                        })}
-                      </td>
+                <DivFooter>
+                  <span>
+                    {formatDistanceToNowStrict(new Date(todo.created_at), {
+                      addSuffix: true,
+                      locale: ptBR
+                    })}
+                  </span>
 
-                      <td>
-                        <ButtonsActions>
-                          <Dialog.Root open={openUpdateModal} onOpenChange={setOpenUpdateModal}>
-                            <Dialog.Trigger type="button"
-                              onClick={() => { setTodoSelected(todo) }}
-                            >
-                              <NotePencil size={29} weight="fill" alt="Editar todo" />
-                            </Dialog.Trigger>
+                  <ButtonsActions>
+                    <Dialog.Root open={openUpdateModal} onOpenChange={setOpenUpdateModal}>
+                      <Dialog.Trigger type="button"
+                        onClick={() => { setTodoSelected(todo) }}
+                      >
+                        <NotePencil size={29} weight="fill" alt="Editar todo" />
+                      </Dialog.Trigger>
 
-                            <UpdateTodoModal
-                              todoSelected={todoSelected}
-                              onClose={handleCloseUpdateTodoModal}
-                            />
+                      <UpdateTodoModal
+                        todoSelected={todoSelected}
+                        onClose={handleCloseUpdateTodoModal}
+                      />
 
-                          </Dialog.Root>
+                    </Dialog.Root>
 
-                          <ButtonTrashIcon onClick={() => { handleDeleteTodo(todo.id) }}>
+                    <ButtonTrashIcon onClick={() => { handleDeleteTodo(todo.id) }}>
+                      <Trash size={29} weight="fill" alt="Excluir todo" />
+                    </ButtonTrashIcon>
+                  </ButtonsActions>
+                </DivFooter>
+              </li>
+            </ul>
+
+          ))}
+
+          <Pagination
+            pages={pages}
+            currentPage={currentPage}
+            onSetCurrentPage={handleSetCurrentPage}
+          />
+        </TodoListMobile>
+      ) : (
+        <TodoList >
+          {
+            todos.length != 0 ?
+              <div>
+                <table >
+                  <thead >
+                    <tr>
+                      <th>Tarefa</th>
+                      <th>Status</th>
+                      <th>Data</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+
+                  <tbody >
+                    {currentTodos.map(todo => (
+                      <tr key={todo.id}>
+                        <td width="50%">{todo.label}</td>
+
+                        <td>
+                          <StatusTodo variant={todo.status}>
+                            {todo.status === "completed" ? "Concluída" : "Pendente"}
+                          </StatusTodo>
+                        </td>
+
+                        <td>
+                          {formatDistanceToNowStrict(new Date(todo.created_at), {
+                            addSuffix: true,
+                            locale: ptBR
+                          })}
+                        </td>
+
+                        <td>
+                          <ButtonsActions>
+                            <Dialog.Root open={openUpdateModal} onOpenChange={setOpenUpdateModal}>
+                              <Dialog.Trigger type="button"
+                                onClick={() => { setTodoSelected(todo) }}
+                              >
+                                <NotePencil size={29} weight="fill" alt="Editar todo" />
+                              </Dialog.Trigger>
+
+                              <UpdateTodoModal
+                                todoSelected={todoSelected}
+                                onClose={handleCloseUpdateTodoModal}
+                              />
+
+                            </Dialog.Root>
+
+                            <ButtonTrashIcon onClick={() => { handleDeleteTodo(todo.id) }}>
                               <Trash size={29} weight="fill" alt="Excluir todo" />
                             </ButtonTrashIcon>
-                        </ButtonsActions>
-                      </td>
+                          </ButtonsActions>
+                        </td>
 
-                    </tr>
-                  ))}
-                </tbody>
+                      </tr>
+                    ))}
+                  </tbody>
 
-              </table>
+                </table>
 
-              <Pagination
-                pages={pages}
-                currentPage={currentPage}
-                onSetCurrentPage={handleSetCurrentPage}
-              />
+                <Pagination
+                  pages={pages}
+                  currentPage={currentPage}
+                  onSetCurrentPage={handleSetCurrentPage}
+                />
 
-            </div>
+              </div>
+              :
+              <ListTodosEmpty />
+          }
+        </TodoList>
+      )}
 
-            :
-            <ListTodosEmpty />
-        }
-      </TodoList>
     </TodoContainer>
   )
 }

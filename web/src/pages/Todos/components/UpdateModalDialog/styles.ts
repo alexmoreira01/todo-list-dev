@@ -20,7 +20,7 @@ export const Content = styled(Dialog.Content)`
     padding: 24px;
 
     position: absolute;
-    bottom: 0;
+    bottom: 40%;
   }
 
   background: ${(props) => props.theme["gray-800"]};
@@ -163,7 +163,7 @@ export const TodoStatusButton = styled(
     color: ${(props) =>
     props.variant === "completed"
       ? props.theme["green-300"]
-      : props.theme["red-300"]};
+      : props.theme["red-500"]};
   }
 
   &[data-state="unchecked"]:hover {
