@@ -10,7 +10,8 @@ import { TodoContext } from '../../../../context/TodosContext';
 
 
 const newTodoFormValidationSchema = zod.object({
-  label: zod.string().min(8, "Informe sua tarefa")
+  // label: zod.string().min(5, "Informe sua tarefa")
+  label: zod.string()
 })
 
 type NewTodoFormValidationInput = zod.infer<typeof newTodoFormValidationSchema>;
@@ -43,6 +44,8 @@ export function CreateForm() {
       <input
         type="text"
         placeholder='Adicione uma nova tarefa'
+        required
+        minLength={5}
         {...register('label')}
       />
 

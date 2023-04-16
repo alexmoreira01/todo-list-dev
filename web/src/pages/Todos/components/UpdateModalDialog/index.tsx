@@ -82,6 +82,7 @@ export function UpdateTodoModal({ todoSelected, onClose }: UpdateTodoModalProps)
               type="text"
               placeholder="Título"
               required
+              minLength={5}
               {...register("label")}
             />
 

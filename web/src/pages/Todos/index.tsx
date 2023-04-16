@@ -9,7 +9,7 @@ import ptBR from "date-fns/esm/locale/pt-BR";
 import { CaretDown, NotePencil, Trash } from "phosphor-react";
 
 import { CreateForm } from './components/CreateForm';
-import { UpdateTodoModal } from './components/UpdateModalDialog/UpdateTodoModal';
+import { UpdateTodoModal } from './components/UpdateModalDialog';
 import { ListTodosEmpty } from './components/ListTodosEmpty';
 import { Pagination } from './components/Pagination';
 
