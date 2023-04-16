@@ -24,7 +24,6 @@
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/infra/server.ts",
     "start": "node dist/infra/server.js",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist/ --copy-files",
-    "typeorm": "typeorm-ts-node-commonjs -d ./src/infra/database/typeorm/index.ts",
     "test": "cross-env NODE_ENV=test jest --runInBand --forceExit"
   },
   "devDependencies": {
