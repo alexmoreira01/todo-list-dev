@@ -5,7 +5,7 @@ import { SelectContent, SelectLabel, SelectViewport, StyledItem, StyledItemIndic
 
 export function SelectStatus() {
 
-  const SelectItem = React.forwardRef(({ children, ...props }, forwardedRef) => {
+  const SelectItem = React.forwardRef(({ children, ...props }: any, forwardedRef) => {
     return (
       <StyledItem {...props} ref={forwardedRef}>
         <Select.ItemText>{children}</Select.ItemText>
