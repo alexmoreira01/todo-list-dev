@@ -39,8 +39,14 @@
 
   <br>
 
-## Rotas da aplicação
+## Testes
+  Foi utilizado Jest para a criação dos testes unitários
+
+## Rotas da aplicação - Documentação
   > https://todo-list-api-q545.onrender.com/api-docs/ - Documentação com Swagger
+
+ou
+> http://localhost:3333/api-docs/ - Documentação com Swagger
 
 ## Deploy da Aplicação com Netlify e Render:
 
@@ -49,6 +55,8 @@
 > https://todo-list-api-q545.onrender.com/ - Back-end
 
 ## Para se executar o projeto em desenvolvimento ou build
+### No modo development e necessário a configuração do arquivo env, mencionado acima em: Back-End - NodeJs
+<br >
 
 - Instalar dependências - Executar na pasta web e server - yarn ou npm
 ```sh
