@@ -4,6 +4,8 @@
  
  > Status do Projeto: Concluido :heavy_check_mark:
  
+  ### Alerta - Pela hospedagem, ao abrir o app pela primeira vez ou após de um algum tempo, acaba tendo um delay ate o carregamento das rotas da API
+
  <br>
  
  ## Principais linguagens e libs utilizadas
