@@ -76,8 +76,10 @@ npm run start
 ```sh
 npm run deploy
 ```
+- Na pasta server - Roda os testes unitários da aplicação
+```sh
+npm run test
+```
 
-
- 
  <br>
 
